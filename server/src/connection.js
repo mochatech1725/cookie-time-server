@@ -1,41 +1,40 @@
 import mongoose from 'mongoose';
 import { DATABASE_URI } from './utils/constants.js';
 
-class ConnectionManager {
+let database = null;
 
-    constructor() {
-        this.db = undefined;
+async function databaseConnect() {
+
+    try {
+
+        await mongoose.connect(DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
+        database = mongoose.connection;
+        
+        database.on("error", () => console.log("Database connection failure"));
+        database.once("open", () => console.log("Connection opened!"));
+    } catch(error) {
+        throw error;
     }
-
-    async connect() {
-
-        let self = this;
-
-        try {
-
-            await mongoose.connect(DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
-            self.db = mongoose.connection;
-            self.db.on("error", () => console.log("Database connection failure"));
-
-            self.db.once("open", () => console.log("Connection opened!"));
-        } catch(error) {
-            throw error;
-        }
-    }
-
-    disconnect() {
-        let self = this;
-        try {
-            if (self.db) {
-                console.log('Closing connection.')
-                self.db.close();
-            }
-        } catch (error) {
-            console.log(error);
-            
-        }
-    }
-
 }
 
-export { ConnectionManager };
+function disconnect() {
+    try {
+        if (database) {
+            console.log('Closing connection.')
+            database.close();
+        }
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+async function getDatabase() {
+    if (!database) {
+        await databaseConnect();
+    }
+    return database;
+  }
+
+  
+export { getDatabase, databaseConnect };

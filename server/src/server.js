@@ -1,10 +1,11 @@
 import express  from 'express';
 import cors  from 'cors';
 import { SERVER_PORT } from './utils/constants.js'
-import { ConnectionManager } from './connection.js';
+import { databaseConnect  } from './connection.js';
 import bodyParser from 'body-parser';
-const connectionManager = new ConnectionManager();
-await connectionManager.connect();
+import { mainRoute } from './routes/main.routes.js';
+
+await databaseConnect();
 
 const app = express();
 app.use(cors());
@@ -18,6 +19,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // app.use('/sellers', sellersRouter);
 // app.use('/products', productsRouter);
+app.use('/agent', mainRoute)
+app.use('/', mainRoute)
 const port = SERVER_PORT || 5500;
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
