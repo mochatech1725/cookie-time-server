@@ -5,16 +5,15 @@ let database = null;
 
 async function databaseConnect() {
 
-    try {
 
-        await mongoose.connect(DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
-        database = mongoose.connection;
-        
-        database.on("error", () => console.log("Database connection failure"));
-        database.once("open", () => console.log("Connection opened!"));
-    } catch(error) {
-        throw error;
-    }
+    console.log('Connecting to mongodb ...');
+
+    await mongoose.connect(DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
+    database = mongoose.connection;
+    console.log('Connected!')
+    
+    database.on("error", () => console.log("Database connection failure"));
+    database.once("open", () => console.log("Connection opened!"));
 }
 
 function disconnect() {
@@ -34,7 +33,6 @@ async function getDatabase() {
         await databaseConnect();
     }
     return database;
-  }
-
+}
   
 export { getDatabase, databaseConnect };
