@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 export const InventoryOrderSchema = new Schema({
     campaign_id: { type: Schema.Types.ObjectId, required: true },
-    order_type: { type: String, required: true , enum: ['AGENT_ORDER', 'TROOP_ORDER']},
+    agent_id:  { type: Schema.Types.ObjectId},
     order_date: { type: Date, required: true , default: Date.now},
     order_items: [InventoryOrderItemSchema]
   },
