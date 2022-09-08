@@ -5,16 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
+            "name": "Start Server",
             "request": "launch",
-            "name": "Server Startup",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "runtimeExecutable": "${workspaceFolder}/node_modules/nodemon/bin/nodemon.js",
-            "program": "${workspaceFolder}/src/server.js",
-            "restart": true,
-            "internalConsoleOptions": "neverOpen"
+            "type": "node",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["start", "debug"],
+            "env" : {
+                "DATABASE_URI": "mongodb+srv://teial:nomk1eraN98@cluster0.vrkhhku.mongodb.net/cookie-manager?retryWrites=true&w=majority"
+            }
         }
     ]
 }
