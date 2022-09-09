@@ -1,7 +1,7 @@
 import  mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const InventoryOrderItemSchema = new Schema({
+export const InventoryOrderItemSchema = new Schema({
     product_id: { type: Schema.Types.ObjectId, required: true  },
     quantity: { type: Number, required: true },
     returning: { type: Boolean, default: false },

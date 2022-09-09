@@ -2,6 +2,8 @@ import Router, {request, response} from 'express';
 import { SalesAgentAction } from '../models/sale-agent-model.js'
 import { ProductAction } from '../models/product-model.js'
 import { CustomerAction } from '../models/customer-model.js'
+import { InventoryAction } from '../models/inventory-order-model.js'
+//import { OrderAction } from '../models/order-model'
 
 const mainRoute = Router();
 
@@ -55,8 +57,20 @@ mainRoute.get("/product/get_products", async (request, response) => {
 mainRoute.get("/customer/get_customers", async (request, response) => {
 
     console.log('Route: /customer/get_customers');
+     const {campaign_id} = request.query;
 
-    const results = await CustomerAction.get_customers({});
+    const results = await CustomerAction.get_customers({campaign_id});
+
+    return response.status(200).send(results);
+});
+
+
+mainRoute.get("/inventory/get_inventory/", async (request, response) => {
+
+    console.log('Route: /inventory/get_inventory/');
+    const {campaign_id} = request.query;
+
+    const results = await InventoryAction.get_inventory({campaign_id});
 
     return response.status(200).send(results);
 });
