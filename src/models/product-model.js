@@ -12,3 +12,17 @@ const ProductSchema = new Schema({
   {collection: 'product'}
   );
 export const Product = mongoose.model('Product', ProductSchema);
+
+export class ProductAction {
+  constructor() {}
+
+  static async get_products() {
+      try {
+          const docs = await Product.find({}).exec();
+          return docs; 
+      } catch (error) {
+          console.log(error);
+      }
+      return []
+  }
+}

@@ -1,5 +1,7 @@
 import Router, {request, response} from 'express';
 import { SalesAgentAction } from '../models/sale-agent-model.js'
+import { ProductAction } from '../models/product-model.js'
+import { CustomerAction } from '../models/customer-model.js'
 
 const mainRoute = Router();
 
@@ -9,7 +11,7 @@ mainRoute.get("/agent/add", async (request, response) => {
     const result = await SalesAgentAction.addAgent({first_name, last_name});
     console.log(result.toString());
 
-    return response.status(200).send(result);
+    return response.status(200).send(results);
 
 });
 
@@ -22,7 +24,6 @@ mainRoute.get("/agent/get_agents", async (request, response) => {
     return response.status(200).send(results);
 });
 
-
 mainRoute.get("/agent/get_agent", async (request, response) => {
 
     console.log('Route: agent/get');
@@ -30,14 +31,35 @@ mainRoute.get("/agent/get_agent", async (request, response) => {
     const results = await SalesAgentAction.get_agent( {first_name, last_name});
 
     return response.status(200).send(results);
+
 });
 
 mainRoute.get("/", async (request, response) => {
 
     console.log('Route:root');
-    const results = await SalesAgentAction.get_agents();
+    const results = await ProductAction.get_products({});
 
     return response.status(200).send(results);
 });
+
+mainRoute.get("/product/get_products", async (request, response) => {
+
+    console.log('Route: /product/get_products"');
+
+    const results = await ProductAction.get_products({});
+
+    return response.status(200).send(results);
+});
+
+
+mainRoute.get("/customer/get_customers", async (request, response) => {
+
+    console.log('Route: /customer/get_customers');
+
+    const results = await CustomerAction.get_customers({});
+
+    return response.status(200).send(results);
+});
+
 
 export { mainRoute };

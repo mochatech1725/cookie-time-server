@@ -16,3 +16,17 @@ const CustomerSchema = new Schema({
   {collection: 'customer'}
   );
 export const Customer = mongoose.model('Customer', CustomerSchema);
+
+export class CustomerAction {
+  constructor() {}
+
+  static async get_customers() {
+      try {
+          const docs = await Customer.find({}).exec();
+          return docs; 
+      } catch (error) {
+          console.log(error);
+      }
+      return []
+  }
+}
