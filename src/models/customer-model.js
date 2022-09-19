@@ -29,4 +29,38 @@ export class CustomerAction {
       }
       return []
   }
+
+  static async add_customer(new_customer) {
+        try {
+            const result = await Customer.create(new_customer);
+            console.log(result.toString());
+            return result._doc;
+        } catch (error) {
+            console.log(error);
+        }
+        return {}
+  } 
+
+  static async update_customer(customer) {
+    try {
+        const result = await Customer.create(new_customer);
+        console.log(result.toString());
+        return result._doc;
+    } catch (error) {
+        console.log(error);
+    }
+    return {}
+ } 
+
+    static async delete_customer(customer_id) {
+        try {
+            const result = await Customer.deleteOne({customer_id});
+            console.log('*** DEBUG delete customer result=', result.toString())
+            return result;
+        } catch (error) {
+            console.log(error);
+        }
+
+        return undefined;
+    } 
 }

@@ -1,12 +1,9 @@
 import  mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const CustomerOrderSchema = new Schema({
-    customer_id: { type: Schema.Types.ObjectId, required: true },
-    order_id: { type: Schema.Types.ObjectId, default: mongoose.Types.ObjectId()},
+export const AgentInventoryOrderSchema = new Schema({
     campaign_id: { type: Schema.Types.ObjectId, required: true },
-    order_source: {type: String},
-    payment_id: {type: Schema.Types.ObjectId}, 
+    agent_id:  { type: Schema.Types.ObjectId},
     order_date: { type: Date, required: true , default: Date.now},
     thinmint: {type: Schema.Types.Number, default: 0}, 
     trefoil: {type: Schema.Types.Number, default: 0}, 
@@ -19,38 +16,28 @@ const CustomerOrderSchema = new Schema({
     adventureful: {type: Schema.Types.Number, default: 0}, 
     raspberry_rally: {type: Schema.Types.Number, default: 0}
   },
-  {collection: 'customer-order'}
+  {collection: 'agent-inventory-order'}
   );
-export const CustomerOrder = mongoose.model('CustomerOrder', CustomerOrderSchema);
+export const AgentInventoryOrder = mongoose.model('AgentInventoryOrder', AgentInventoryOrderSchema);
 
-export class CustomerOrderAction {
+export class AgentInventoryAction {
+
   constructor() {}
 
-  static async get_orders(campaign_id) {
-    try {
-        const docs = await CustomerOrder.find({campaign_id}).exec();
-        
-        return docs; 
-    } catch (error) {
-        console.log(error);
-    }
-    return []
-}
-
-static async get_customer_orders(campaign_id, customer_id) {
-  try {
-      const docs = await CustomerOrder.find({campaign_id, customer_id}).exec();
-      
-      return docs; 
-  } catch (error) {
-      console.log(error);
+  static async get_inventory(campaign_id, agent_id) {
+      try {
+          const docs = await InventoryOrder.find({campaign_id, agent_id}).exec();
+          
+          return docs; 
+      } catch (error) {
+          console.log(error);
+      }
+      return []
   }
-  return []
-}
 
-  static async new_order(new_order) {
+  static async new_inventory(record) {
     try {
-        const result = await CustomerOrder.create(new_order);
+        const result = await AgentInventoryOrder.create(record);
         console.log(result.toString());
         return result._doc;
     } catch (error) {
@@ -59,9 +46,9 @@ static async get_customer_orders(campaign_id, customer_id) {
     return {}
   } 
 
-  static async update_order(record) {
+  static async update_inventory(record) {
     try {
-        const doc = await CustomerOrder.find({customer_id:  mongoose.Types.ObjectId(record.customer_id), order_id: mongoose.Types.ObjectId(record.order_id)}).exec();
+        const doc = await AgentInventoryOrder.find({campaign_id, agent_id}).exec();
         doc.thinmint = record.thinmint;
         doc.trefoil = record.trefoil;
         doc.samoa = record.samoa;
