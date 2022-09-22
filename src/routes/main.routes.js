@@ -77,8 +77,8 @@ mainRoute.get("/customer/get_customers", async (request, response) => {
 
 mainRoute.get("/customer/add", async (request, response) => {
     console.log('Route: /customer/add')
-    const {first_name, last_name, city, state, zipcode, email_address, phone_number} = request.query;
-    const result = await CustomerAction.add_customer({first_name, last_name, city, state, zipcode, email_address, phone_number});
+    const {first_name, last_name, address, city, state, zipcode, email_address, phone_number} = request.query;
+    const result = await CustomerAction.add_customer({first_name, last_name, address, city, state, zipcode, email_address, phone_number});
 
     return response.status(200).send(result);
 });
