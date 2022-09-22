@@ -91,6 +91,14 @@ mainRoute.get("/customer/delete", async (request, response) => {
     return response.status(200).send(result);
 });
 
+mainRoute.get("/customer/update", async (request, response) => {
+    console.log('Route: /customer/update')
+    const {customer_id, first_name, last_name, address, city, state, zipcode, email_address, phone_number} = request.query;
+    const result = await CustomerAction.update_customer({customer_id, first_name, last_name, address, city, state, zipcode, email_address, phone_number});
+
+    return response.status(200).send(result);
+});
+
 // **************  Product Inventory Routes **************************
 mainRoute.get("/product_inventory/create_inventory", async (request, response) => {
     console.log('Route: /product_inventory/create_inventory')
@@ -183,9 +191,10 @@ mainRoute.get("/customer_order/get_customer_orders/", async (request, response) 
 mainRoute.get("/customer_order/update/", async (request, response) => {
 
     console.log('Route: /customer_order/update/');
-    const {customer_id, order_id,thinmint,trefoil,samoa,dosido,tagalong,lemonup,toffee_tastic,smores,adventureful,raspberry_rally} = request.query;
+    const {campaign_id, customer_id, order_id,thinmint,trefoil,samoa,dosido,tagalong,lemonup,toffee_tastic,smores,adventureful,raspberry_rally} = request.query;
 
-    const results = await CustomerOrderAction.update_order({ customer_id, 
+    const results = await CustomerOrderAction.update_order({ campaign_id, 
+        customer_id, 
         order_id, 
         thinmint: convertInt(thinmint),
         trefoil: convertInt(trefoil),
@@ -201,4 +210,15 @@ mainRoute.get("/customer_order/update/", async (request, response) => {
 
     return response.status(200).send(results);
 });
+
+mainRoute.get("/customer_order/delete/", async (request, response) => {
+
+    console.log('Route: /customer_order/delete/');
+    const {order_id, customer_id} = request.query;
+
+    const result = await CustomerOrderAction.delete_order(order_id, customer_id);
+
+    return response.status(200).send(result);
+});
+
 export { mainRoute };

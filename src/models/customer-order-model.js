@@ -61,23 +61,28 @@ static async get_customer_orders(campaign_id, customer_id) {
 
   static async update_order(record) {
     try {
-        const doc = await CustomerOrder.find({customer_id:  mongoose.Types.ObjectId(record.customer_id), order_id: mongoose.Types.ObjectId(record.order_id)}).exec();
-        doc.thinmint = record.thinmint;
-        doc.trefoil = record.trefoil;
-        doc.samoa = record.samoa;
-        doc.dosido = record.dosido;
-        doc.tagalong = record.tagalong;
-        doc.lemonup = record.lemonup;
-        doc.toffee_tastic = record.toffee_tastic;
-        doc.smores = record.smores;
-        doc.adventureful = record.adventureful;
-        doc.raspberry_rally = record.raspberry_rally;
-
-        doc.save();
-        return doc; 
+      const options = { upsert: true, new: false, setDefaultsOnInsert: true };
+      const query = { campaign_id:  mongoose.Types.ObjectId(record.campaign_id), 
+        order_id:  mongoose.Types.ObjectId(record.order_id), 
+        customer_id:  mongoose.Types.ObjectId(record.customer_id)};
+    
+      const result = await CustomerOrder.findOneAndUpdate(query, record,options);
+      console.log(result.toString());
+      return result._doc; 
     } catch (error) {
         console.log(error);
     }
-    return []
+    return {}
   }
+
+  static async delete_order(order_id, customer_id) {
+    try {
+        const result = await CustomerOrder.deleteOne({order_id});
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+
+    return undefined;
+} 
 }

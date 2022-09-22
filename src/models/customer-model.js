@@ -43,7 +43,9 @@ export class CustomerAction {
 
   static async update_customer(customer) {
     try {
-        const result = await Customer.create(new_customer);
+        const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+        const query = { customer_id: customer.customer_id};
+        const result = await Customer.findOneAndUpdate(query, customer,options);
         console.log(result.toString());
         return result._doc;
     } catch (error) {
@@ -55,7 +57,6 @@ export class CustomerAction {
     static async delete_customer(customer_id) {
         try {
             const result = await Customer.deleteOne({customer_id});
-            console.log('*** DEBUG delete customer result=', result.toString())
             return result;
         } catch (error) {
             console.log(error);
