@@ -57,12 +57,43 @@ mainRoute.get("/", async (request, response) => {
 // **************  Product Routes **************************
 mainRoute.get("/product/get_products", async (request, response) => {
 
-    console.log('Route: /product/get_products"');
+    console.log('Route: /product/get_products');
 
     const results = await ProductAction.get_products({});
 
     return response.status(200).send(results);
 });
+
+mainRoute.get("/product/add", async (request, response) => {
+
+    console.log('Route: /product/add');
+    const {product_name, product_price,year_introduced,active} = request.query;
+
+    const results = await ProductAction.new_product({product_name, product_price,year_introduced,active} );
+
+    return response.status(200).send(results);
+});
+
+mainRoute.get("/product/update", async (request, response) => {
+
+    console.log('Route: /product/update');
+    const {product_id, product_name, product_price,year_introduced,active} = request.query;
+
+    const results = await ProductAction.update_product({product_id,product_name, product_price,year_introduced,active} );
+
+    return response.status(200).send(results);
+});
+
+mainRoute.get("/product/delete", async (request, response) => {
+
+    console.log('Route: /product/delete');
+    const {product_id} = request.query;
+
+    const results = await ProductAction.update_product(product_id);
+
+    return response.status(200).send(results);
+});
+
 
 // **************  Customer Routes **************************
 mainRoute.get("/customer/get_customers", async (request, response) => {
