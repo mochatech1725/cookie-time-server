@@ -77,12 +77,22 @@ static async get_customer_orders(campaign_id, customer_id) {
 
   static async delete_order(order_id, customer_id) {
     try {
-        const result = await CustomerOrder.deleteOne({order_id});
+        const result = await CustomerOrder.deleteOne({order_id, customer_id});
         return result;
     } catch (error) {
         console.log(error);
     }
 
     return undefined;
-} 
+  } 
+
+  static async get_current_sales(campaign_id) {
+    try {
+      const docs = get_orders(campaign_id); 
+      return docs;
+    } catch (error) {
+      console.log(error);
+    }
+    return {};
+  }
 }

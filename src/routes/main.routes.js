@@ -252,4 +252,14 @@ mainRoute.get("/customer_order/delete/", async (request, response) => {
     return response.status(200).send(result);
 });
 
+mainRoute.get("/reports/get_current_sales/", async (request, response) => {
+
+    console.log('Route: /reports/get_current_sales/');
+    const {campaign_id} = request.query;
+    const result = await CustomerOrderAction.get_current_sales(campaign_id);
+   
+
+    return response.status(200).send(result);
+});
+
 export { mainRoute };
