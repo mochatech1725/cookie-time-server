@@ -16,7 +16,7 @@ export class CookieCampaignAction {
 
   static async get_campaigns() {
       try {
-          const docs = await CookieCampaign.find({}).exec();
+          const docs = await CookieCampaign.find({}).sort({campaign_year:-1});
           return docs; 
       } catch (error) {
           console.log(error);
