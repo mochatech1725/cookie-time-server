@@ -10,3 +10,52 @@ const CookieCampaignSchema = new Schema({
   {collection: 'cookie-campaign'}
   );
 export const CookieCampaign = mongoose.model('CookieCampaign', CookieCampaignSchema);
+
+export class CookieCampaignAction {
+  constructor() {}
+
+  static async get_campaigns() {
+      try {
+          const docs = await CookieCampaign.find({}).exec();
+          return docs; 
+      } catch (error) {
+          console.log(error);
+      }
+      return []
+  }
+
+  static async add_campaign(new_campaign) {
+        try {
+            const result = await CookieCampaign.create(new_campaign);
+            console.log(result.toString());
+            return result._doc;
+        } catch (error) {
+            console.log(error);
+        }
+        return {}
+  } 
+
+  static async update_campaign(campaign) {
+    try {
+        const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+        const query = { campaign_id: campaign.campaign_id};
+        const result = await CookieCampaign.findOneAndUpdate(query, campaign,options);
+        console.log(result.toString());
+        return result._doc;
+    } catch (error) {
+        console.log(error);
+    }
+    return {}
+ } 
+
+    static async delete_customer(campaign_id) {
+        try {
+            const result = await CookieCampaign.deleteOne({campaign_id});
+            return result;
+        } catch (error) {
+            console.log(error);
+        }
+
+        return undefined;
+    } 
+}

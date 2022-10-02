@@ -4,6 +4,7 @@ import { ProductAction } from '../models/product-model.js'
 import { CustomerAction } from '../models/customer-model.js'
 import { ProductInventoryAction } from '../models/product-inventory-model.js'
 import { CustomerOrderAction } from '../models/customer-order-model.js'
+import { CookieCampaignAction } from '../models/cookie-campaign-model.js';
 
 const mainRoute = Router();
 function convertInt(input, defaultValue=0) {
@@ -258,6 +259,44 @@ mainRoute.get("/reports/get_current_sales/", async (request, response) => {
     const {campaign_id} = request.query;
     const result = await CustomerOrderAction.get_current_sales(campaign_id);
    
+
+    return response.status(200).send(result);
+});
+
+
+// **************  Campaign Routes **************************
+
+mainRoute.get("/campaign/get_campaigns", async (request, response) => {
+
+    console.log('Route: /campaign/get_campaigns');
+    const {campaign_id} = request.query;
+
+    const results = await CookieCampaignAction.get_campaigns({campaign_id});
+
+    return response.status(200).send(results);
+});
+
+mainRoute.get("/campaign/add", async (request, response) => {
+    console.log('Route: /campaign/add')
+    const {campaign_name, campaign_id, campaign_year} = request.query;
+    const result = await CookieCampaignAction.add_campaign({campaign_name, campaign_id, campaign_year});
+
+    return response.status(200).send(result);
+});
+
+mainRoute.get("/campaign/delete", async (request, response) => {
+    console.log('Route: /campaign/delete')
+    const {campaign_id} = request.query;
+    const result = await CookieCampaignAction.delete_campaign(campaign_id);
+
+    return response.status(200).send(result);
+});
+
+mainRoute.get("/campaign/update", async (request, response) => {
+    console.log('Route: /campaign/update')
+    const {campaign_id, campaign_name, campaign_year} = request.query;
+
+    const result = await CookieCampaignAction.update_campaign({campaign_id, campaign_name, campaign_year});
 
     return response.status(200).send(result);
 });
