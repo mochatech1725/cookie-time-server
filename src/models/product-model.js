@@ -18,7 +18,7 @@ export class ProductAction {
 
   static async get_products() {
       try {
-          const docs = await Product.find({}).exec();
+          const docs = await Product.find({});
           return docs; 
       } catch (error) {
           console.log(error);

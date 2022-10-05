@@ -25,7 +25,7 @@ export class InventoryOrderAction {
 
   static async get_orders(campaign_id) {
     try {
-        const docs = await InventoryOrder.find({campaign_id}).exec();
+        const docs = await InventoryOrder.find({campaign_id});
         
         return docs; 
     } catch (error) {
