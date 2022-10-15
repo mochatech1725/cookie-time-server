@@ -28,7 +28,7 @@ mainRoute.get("/agent/add", async (request, response) => {
 
 });
 
-mainRoute.get("/agent/get_agents", async (request, response) => {
+mainRoute.get("/agent/agents", async (request, response) => {
 
     console.log('Route: agent/get_agents');
 
@@ -37,7 +37,7 @@ mainRoute.get("/agent/get_agents", async (request, response) => {
     return response.status(200).send(results);
 });
 
-mainRoute.get("/agent/get_agent", async (request, response) => {
+mainRoute.get("/agent/agent", async (request, response) => {
 
     console.log('Route: agent/get');
     const {first_name, last_name} = request.query;
@@ -56,9 +56,9 @@ mainRoute.get("/", async (request, response) => {
 });
 
 // **************  Product Routes **************************
-mainRoute.get("/product/get_products", async (request, response) => {
+mainRoute.get("/product/products", async (request, response) => {
 
-    console.log('Route: /product/get_products');
+    console.log('Route: /product/products');
 
     const results = await ProductAction.get_products({});
 
@@ -97,9 +97,9 @@ mainRoute.get("/product/delete", async (request, response) => {
 
 
 // **************  Customer Routes **************************
-mainRoute.get("/customer/get_customers", async (request, response) => {
+mainRoute.get("/customer/customers", async (request, response) => {
 
-    console.log('Route: /customer/get_customers');
+    console.log('Route: /customer/customers');
     const {campaign_id} = request.query;
 
     const results = await CustomerAction.get_customers({campaign_id});
@@ -132,8 +132,8 @@ mainRoute.get("/customer/update", async (request, response) => {
 });
 
 // **************  Product Inventory Routes **************************
-mainRoute.get("/product_inventory/create_inventory", async (request, response) => {
-    console.log('Route: /product_inventory/create_inventory')
+mainRoute.get("/product_inventory/create", async (request, response) => {
+    console.log('Route: /product_inventory/create')
     const {campaign_id, thinmint,trefoil,samoa,dosido,tagalong,lemonup,toffee_tastic,smores,adventureful,raspberry_rally} = request.query;
     const result = await ProductInventoryAction.update_inventory({campaign_id, 
         thinmint: convertInt(thinmint),
@@ -151,9 +151,9 @@ mainRoute.get("/product_inventory/create_inventory", async (request, response) =
     return response.status(200).send(result);
 });
 
-mainRoute.get("/product_inventory/get_inventory/", async (request, response) => {
+mainRoute.get("/product_inventory/inventory/", async (request, response) => {
 
-    console.log('Route: /product_inventory/get_inventory/');
+    console.log('Route: /product_inventory/inventory/');
     const {campaign_id} = request.query;
 
     const results = await ProductInventoryAction.get_inventory(campaign_id );
@@ -202,18 +202,18 @@ mainRoute.get("/customer_order/add/", async (request, response) => {
     return response.status(200).send(result);
 });
 
-mainRoute.get("/customer_order/get_orders/", async (request, response) => {
+mainRoute.get("/customer_order/_orders/", async (request, response) => {
 
-    console.log('Route: /customer_order/get_orders/');
+    console.log('Route: /customer_order/orders/');
     const {campaign_id} = request.query;
 
     const results = await CustomerOrderAction.get_orders(campaign_id);
     return response.status(200).send(results);
 });
 
-mainRoute.get("/customer_order/get_customer_orders/", async (request, response) => {
+mainRoute.get("/customer_order/orders/", async (request, response) => {
 
-    console.log('Route: /customer_order/get_orders/');
+    console.log('Route: /customer_order/orders/');
     const {campaign_id, customer_id} = request.query;
 
     const results = await CustomerOrderAction.get_orders(campaign_id, customer_id);
@@ -253,9 +253,9 @@ mainRoute.get("/customer_order/delete/", async (request, response) => {
     return response.status(200).send(result);
 });
 
-mainRoute.get("/reports/get_current_sales/", async (request, response) => {
+mainRoute.get("/reports/current_sales/", async (request, response) => {
 
-    console.log('Route: /reports/get_current_sales/');
+    console.log('Route: /reports/current_sales/');
     const {campaign_id} = request.query;
     const result = await CustomerOrderAction.get_current_sales(campaign_id);
    
@@ -266,7 +266,7 @@ mainRoute.get("/reports/get_current_sales/", async (request, response) => {
 
 // **************  Campaign Routes **************************
 
-mainRoute.get("/campaign/get_campaigns", async (request, response) => {
+mainRoute.get("/campaign/campaigns", async (request, response) => {
 
     console.log('Route: /campaign/get_campaigns');
     const {campaign_id} = request.query;
